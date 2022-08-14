@@ -5,6 +5,8 @@ import ImageGallery from './ImageGallery/ImageGallery'
 import Button from './ImageGallery/Button'
 import Modal from './ImageGallery/Modal'
 import Loader from './ImageGallery/Loader'
+import PropTypes from 'prop-types'; // ES6
+
 
 const { Component } = require("react")
 
@@ -139,6 +141,20 @@ const {isLoading} = this.state
   )
 
     }
+  }
+
+
+
+  App.propTypes = {
+    isLoading: PropTypes.bool,
+    link: PropTypes.string,
+    page: PropTypes.number,
+    photos: PropTypes.array,
+    total: PropTypes.number,
+    key: PropTypes.string,
+  perPage: PropTypes.number,
+  modal: PropTypes.bool,
+  largePhoto: PropTypes.object
   }
 
   export default App

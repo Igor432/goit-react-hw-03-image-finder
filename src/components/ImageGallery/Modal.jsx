@@ -1,4 +1,5 @@
 import '../styles.css'
+import PropTypes from 'prop-types'; // ES6
 
 
 
@@ -16,5 +17,12 @@ return (
 
 )
 }
+
+
+Modal.propTypes = {
+
+  quitModal: PropTypes.func
+}
+
 
 export default Modal

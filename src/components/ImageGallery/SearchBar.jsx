@@ -1,5 +1,6 @@
 
 import '../styles.css'
+import PropTypes from 'prop-types'; // ES6
 
 
 const SearchBar = ({onSubmit}) => {
@@ -29,6 +30,13 @@ return (
 )
 
 
+}
+
+
+
+SearchBar.propTypes = {
+
+  onSubmit: PropTypes.func
 }
 
 export default SearchBar

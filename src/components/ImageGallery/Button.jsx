@@ -1,4 +1,6 @@
 import '../styles.css'
+import PropTypes from 'prop-types'; // ES6
+
 
 const Button = ({loadMOre}) => {
 
@@ -8,6 +10,11 @@ const Button = ({loadMOre}) => {
     <button type="button" class='Button' onClick={loadMOre}>Load More</button>
 </div>
     )
+}
+
+Button.propTypes = {
+
+    loadMOre: PropTypes.func
 }
 
 export default Button

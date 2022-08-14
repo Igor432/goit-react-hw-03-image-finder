@@ -1,4 +1,5 @@
 import '../styles.css'
+import PropTypes from 'prop-types'; // ES6
 
 
 const ImageGalleryItem = ({ webformatURL, largeImageURL, id, onModal}) => {
@@ -11,5 +12,12 @@ return (
 )
     
 }
+
+
+ImageGalleryItem.propTypes = {
+
+  onModal: PropTypes.func
+}
+
 
 export default ImageGalleryItem

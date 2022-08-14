@@ -1,6 +1,5 @@
 import ImageGalleryItem from "./ImageGalleryItem"
-
-
+import PropTypes from 'prop-types'; // ES6
 
 
 const ImageGallery = ({photos, onModal}) => {
@@ -16,6 +15,12 @@ const ImageGallery = ({photos, onModal}) => {
 
 </ul>
     )
+}
+
+
+ImageGallery.propTypes = {
+
+    onModal: PropTypes.func
 }
 
 export default ImageGallery
