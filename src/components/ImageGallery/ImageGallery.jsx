@@ -1,10 +1,8 @@
 import ImageGalleryItem from './ImageGalleryItem';
 import PropTypes from 'prop-types'; // ES6
-import style from './image.module.css'
-
+import style from './image.module.css';
 
 const ImageGallery = ({ photos, onModal }) => {
-  
   return (
     <ul className={style.ImageGallery}>
       {photos.map(photo => (

@@ -85,7 +85,7 @@ class App extends Component {
     const { isLoading } = this.state;
 
     return (
-      <div className={style.main} style={{}}>
+      <div className={style.main} >
         <SearchBar onSubmit={this.onSubmit} />
         {isLoading && <Loader Loading={isLoading} />}
         <ImageGallery photos={this.state.photos} onModal={this.onModal} />
