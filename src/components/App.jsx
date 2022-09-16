@@ -11,54 +11,45 @@ const { Component } = require('react');
 class App extends Component {
   state = {
     isLoading: false,
-    link: '',
+    modal: false,
     page: 1,
     photos: [],
+    keyWord: '',
     total: 0,
-    key: '',
     perPage: 12,
-    modal: false,
     largePhoto: {},
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    console.log(this.state.photos);
-    const currentKey = this.state.key;
-    console.log(currentKey);
-    if (prevState.key !== this.state.key) {
-      this.setState({ page: 1, perPage: 12 });
-    }
-
     if (prevState.link !== this.state.link) {
-      this.getPhoto();
-    } else if (prevState.perPage !== this.state.perPage) {
-      this.setState({
-        link: `https://pixabay.com/api/?q=${this.state.key}&page=${this.state.page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=${this.state.perPage}`,
-      });
+      this.setState({ page: 1, perPage: 12 });
+      this.getPhoto(this.state.keyWord);
+    }
+    if (prevState.perPage !== this.state.perPage) {
+      this.getPhoto(this.state.keyWord);
     }
 
     document.addEventListener('keydown', this.quitModal);
   };
 
-  getPhoto = async () => {
+  getPhoto = async keyWord => {
     this.setState({ isLoading: true });
-    const photos = await axios.get(this.state.link);
+    const photos = await axios.get(
+      `https://pixabay.com/api/?q=${keyWord}&page=${this.state.page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=${this.state.perPage}`
+    );
     this.setState({
       photos: photos.data.hits,
       total: photos.data.total,
-      id: photos.data.id,
       isLoading: false,
     });
   };
 
   onSubmit = e => {
-    const { page } = this.state;
-    const { perPage } = this.state;
     const keyWord = e.target.search.value;
     this.setState({
-      key: keyWord,
-      link: `https://pixabay.com/api/?q=${keyWord}&page=${page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=${perPage}`,
+      keyWord: keyWord,
     });
+    this.getPhoto(keyWord);
     e.preventDefault();
     e.target.reset();
   };
@@ -66,12 +57,11 @@ class App extends Component {
   loadMore = e => {
     e.preventDefault();
 
-    this.setState(prevState => {
+    this.setState(prev => {
       return {
-        perPage: prevState.perPage + 12,
+        perPage: prev.perPage + 12,
       };
     });
-    console.log(this.state.page);
   };
 
   onModal = e => {
@@ -95,12 +85,7 @@ class App extends Component {
     const { isLoading } = this.state;
 
     return (
-      <div
-       className={style.main}
-        style={{
-  
-        }}
-      >
+      <div className={style.main} style={{}}>
         <SearchBar onSubmit={this.onSubmit} />
         {isLoading && <Loader Loading={isLoading} />}
         <ImageGallery photos={this.state.photos} onModal={this.onModal} />
@@ -115,6 +100,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

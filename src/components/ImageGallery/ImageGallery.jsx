@@ -4,7 +4,7 @@ import style from './image.module.css'
 
 
 const ImageGallery = ({ photos, onModal }) => {
-  console.log(typeof photos);
+  
   return (
     <ul className={style.ImageGallery}>
       {photos.map(photo => (
