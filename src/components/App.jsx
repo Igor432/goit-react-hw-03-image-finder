@@ -11,20 +11,24 @@ const { Component } = require('react');
 class App extends Component {
   state = {
     isLoading: false,
-    modal: false,
     page: 1,
     photos: [],
     keyWord: '',
-    total: 0,
     perPage: 12,
-    largePhoto: {},
+    modal: false,
   };
 
+  bigPhoto = {};
+
   componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.link !== this.state.link) {
-      this.setState({ page: 1, perPage: 12 });
+    if (prevState.keyWord !== this.state.keyWord) {
+      this.setState({
+        page: 1,
+        perPage: 12,
+      });
       this.getPhoto(this.state.keyWord);
     }
+
     if (prevState.perPage !== this.state.perPage) {
       this.getPhoto(this.state.keyWord);
     }
@@ -37,11 +41,12 @@ class App extends Component {
     const photos = await axios.get(
       `https://pixabay.com/api/?q=${keyWord}&page=${this.state.page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=${this.state.perPage}`
     );
+
     this.setState({
-      photos: photos.data.hits,
-      total: photos.data.total,
+      photos: photos.data,
       isLoading: false,
     });
+    console.log(this.state.photos.hits);
   };
 
   onSubmit = e => {
@@ -49,14 +54,13 @@ class App extends Component {
     this.setState({
       keyWord: keyWord,
     });
-    this.getPhoto(keyWord);
+
     e.preventDefault();
     e.target.reset();
   };
 
   loadMore = e => {
     e.preventDefault();
-
     this.setState(prev => {
       return {
         perPage: prev.perPage + 12,
@@ -67,10 +71,9 @@ class App extends Component {
   onModal = e => {
     const target = e.target;
     this.setState({ modal: true });
-    let bigPhoto = this.state.photos.filter(
+    this.bigPhoto = this.state.photos.hits.filter(
       photo => photo.id === Math.floor(target.name)
     );
-    this.setState({ largePhoto: bigPhoto });
   };
 
   quitModal = e => {
@@ -80,22 +83,20 @@ class App extends Component {
   };
 
   render() {
-    const { total } = this.state;
+    const { perPage } = this.state;
+    const { photos } = this.state;
     const { modal } = this.state;
     const { isLoading } = this.state;
 
     return (
-      <div className={style.main} >
+      <div className={style.main} style={{}}>
         <SearchBar onSubmit={this.onSubmit} />
         {isLoading && <Loader Loading={isLoading} />}
-        <ImageGallery photos={this.state.photos} onModal={this.onModal} />
-        {total > 12 && <Button loadMOre={this.loadMore} />}
-        {modal && (
-          <Modal
-            photos={this.state.photos}
-            largePhoto={this.state.largePhoto}
-          />
+        {photos.total > 0 && (
+          <ImageGallery photos={photos.hits} onModal={this.onModal} />
         )}
+        {photos.total > perPage && <Button loadMOre={this.loadMore} />}
+        {modal && <Modal largePhoto={this.bigPhoto[0]} />}
       </div>
     );
   }
