@@ -1,7 +1,6 @@
 import '../styles.css';
 import PropTypes from 'prop-types'; // ES6
-import style from './image.module.css'
-
+import style from './image.module.css';
 
 const ImageGalleryItem = ({ webformatURL, id, onModal }) => {
   return (
@@ -20,7 +19,7 @@ const ImageGalleryItem = ({ webformatURL, id, onModal }) => {
 ImageGalleryItem.propTypes = {
   onModal: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  webformatURL: PropTypes.string.isRequired
+  webformatURL: PropTypes.string.isRequired,
 };
 
 export default ImageGalleryItem;

@@ -1,7 +1,6 @@
 import '../styles.css';
 import PropTypes from 'prop-types'; // ES6
-import style from './image.module.css'
-
+import style from './image.module.css';
 
 const SearchBar = ({ onSubmit }) => {
   return (
@@ -12,7 +11,7 @@ const SearchBar = ({ onSubmit }) => {
         </button>
 
         <input
-         className={style.SearchForm_input}
+          className={style.SearchForm_input}
           type="text"
           autoComplete="off"
           autoFocus
