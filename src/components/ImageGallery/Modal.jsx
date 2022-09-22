@@ -12,6 +12,15 @@ componentDidMount() {
     }
   });
 }
+
+componentWillUnmount() {
+  document.removeEventListener('keydown', e => {
+
+    if (e.key === 'Escape') {
+      this.props.quitModal();
+    }
+  })
+}
   
 
 render() {

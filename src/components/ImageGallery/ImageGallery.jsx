@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
 import Loader from '../ImageGallery/Loader';
 
-const ImageGallery = ({ photos, onModal, Loading, modal }) => {
+const ImageGallery = ({ photos,  Loading }) => {
 
 
   return (
@@ -11,12 +11,12 @@ const ImageGallery = ({ photos, onModal, Loading, modal }) => {
  
       {photos.map(photo => (
         <ImageGalleryItem
-          modal={modal}
+       
           alt={photo.tag}
           id={photo.id}
           key={photo.id}
           webformatURL={photo.webformatURL}
-          onModal={onModal}
+        
           bigimg={photo.largeImageURL}
         >
         
@@ -30,7 +30,6 @@ const ImageGallery = ({ photos, onModal, Loading, modal }) => {
 };
 
 ImageGallery.propTypes = {
-  onModal: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
