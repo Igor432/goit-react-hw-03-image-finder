@@ -1,25 +1,31 @@
 import '../styles.css';
-import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
+import { Component } from 'react';
+import { render } from '@testing-library/react';
 
-const Modal = ({ largePhoto, quitModal }) => {
+class Modal extends Component {
+
+componentDidMount() {
   document.addEventListener('keydown', e => {
+
     if (e.key === 'Escape') {
-      quitModal();
+      this.props.quitModal();
     }
   });
+}
+  
 
+render() {
   return (
-    <div className={style.Overlay} onClick={quitModal}>
+    <div className={style.Overlay} onClick={this.props.quitModal}>
       <div className={style.Modal}>
-        <img width="1000px" height="auto" src={largePhoto} alt="" />
+        <img width="1000px" height="auto" src={this.props.largePhoto} alt="" />
       </div>
     </div>
   );
-};
+}
+}
 
-Modal.propTypes = {
-  largePhoto: PropTypes.string.isRequired,
-};
+
 
 export default Modal;

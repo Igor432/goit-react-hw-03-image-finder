@@ -3,7 +3,6 @@ import axios from 'axios';
 import SearchBar from './ImageGallery/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './ImageGallery/Button';
-import Modal from './ImageGallery/Modal';
 
 const { Component } = require('react');
 
@@ -13,7 +12,6 @@ class App extends Component {
     page: 1,
     photos: [],
     keyWord: '',
-    modal: false,
     largePhoto: {},
   };
 
@@ -52,30 +50,15 @@ class App extends Component {
     this.setState({
       keyWord: e.target.value
     })
-    console.log(this.state.keyWord)
+
   }
 
-  onModal = e => {
-    const bigImg = e.target.getAttribute('bigImg');
-    this.setState({
-      /*
-      largePhoto: this.state.photos.filter(
-        photo => photo.id === Math.floor(e.target.name)
-      ),
-      */
-      largePhoto: bigImg,
-      modal: true,
-    });
-  };
+ 
 
-  quitModal = e => {
-    this.setState({
-      modal: false,
-    });
-  };
+
 
   loadMore = e => {
-    e.preventDefault();
+   
     this.getPhoto(this.state.keyWord, this.state.page);
   };
 
@@ -92,18 +75,14 @@ class App extends Component {
         <SearchBar onSubmit={this.onSubmit} onChange={this.onChange} keyWord={this.state.keyWord}/>
 
         <ImageGallery
+          modal={modal}
           photos={photos}
           onModal={this.onModal}
           Loading={isLoading}
         />
 
         {total >= page && <Button loadMore={this.loadMore} />}
-        {modal && (
-          <Modal
-            largePhoto={this.state.largePhoto}
-            quitModal={this.quitModal}
-          />
-        )}
+      
       </div>
     );
   }
