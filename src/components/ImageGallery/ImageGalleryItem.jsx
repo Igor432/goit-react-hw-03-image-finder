@@ -11,7 +11,7 @@ const ImageGalleryItem = ({ webformatURL, id, onModal, bigimg }) => {
         src={webformatURL}
         alt=''
         onClick={onModal}
-        bigImg={bigimg}
+        bigimg={bigimg}
       />
     </li>
   );

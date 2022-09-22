@@ -33,6 +33,7 @@ class App extends Component {
     });
   };
 
+  
   onSubmit = e => {
     const keyWord = e.target.search.value;
     this.setState({
@@ -45,6 +46,14 @@ class App extends Component {
     e.target.reset();
     this.getPhoto(keyWord, 1);
   };
+  
+
+  onChange = e => {
+    this.setState({
+      keyWord: e.target.value
+    })
+    console.log(this.state.keyWord)
+  }
 
   onModal = e => {
     const bigImg = e.target.getAttribute('bigImg');
@@ -63,8 +72,6 @@ class App extends Component {
     this.setState({
       modal: false,
     });
-   
-    
   };
 
   loadMore = e => {
@@ -79,9 +86,10 @@ class App extends Component {
     const { isLoading } = this.state;
     const { page } = this.state;
 
+
     return (
       <div className={style.main}>
-        <SearchBar onSubmit={this.onSubmit} />
+        <SearchBar onSubmit={this.onSubmit} onChange={this.onChange} keyWord={this.state.keyWord}/>
 
         <ImageGallery
           photos={photos}

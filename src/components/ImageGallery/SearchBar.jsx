@@ -2,7 +2,7 @@ import '../styles.css';
 import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit, keyWord, onChange }) => {
   return (
     <header className={style.Searchbar}>
       <form className={style.SearchForm} onSubmit={onSubmit}>
@@ -13,11 +13,12 @@ const SearchBar = ({ onSubmit }) => {
         <input
           className={style.SearchForm_input}
           type="text"
+          name='search'
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
-          name="search"
-      
+          value={keyWord}
+          onChange={onChange}
         />
       </form>
     </header>
