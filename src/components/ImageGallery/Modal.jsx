@@ -1,9 +1,8 @@
 import '../styles.css';
 import style from './image.module.css';
 import { Component } from 'react';
-import { render } from '@testing-library/react';
 
-class Modal extends Component {
+export class Modal extends Component {
 
 componentDidMount() {
   document.addEventListener('keydown', e => {
