@@ -63,11 +63,8 @@ class App extends Component {
     this.setState({
       modal: false,
     });
-    if (e.key === 'Escape') {
-      this.setState({
-        modal: false,
-      });
-    }
+   
+    
   };
 
   loadMore = e => {

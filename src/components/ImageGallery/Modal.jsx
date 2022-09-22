@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
 
 const Modal = ({ largePhoto, quitModal }) => {
-  document.addEventListener('keydown', quitModal);
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      quitModal()
+    }
+  });
   console.log(largePhoto)
   
   return (
