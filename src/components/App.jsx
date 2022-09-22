@@ -4,7 +4,6 @@ import SearchBar from './ImageGallery/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './ImageGallery/Button';
 import Modal from './ImageGallery/Modal';
-import Loader from './ImageGallery/Loader';
 
 const { Component } = require('react');
 
@@ -14,89 +13,93 @@ class App extends Component {
     page: 1,
     photos: [],
     keyWord: '',
-    perPage: 12,
     modal: false,
+    largePhoto: {},
   };
 
-  bigPhoto = {};
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.keyWord !== this.state.keyWord) {
-      this.setState({
-        page: 1,
-        perPage: 12,
-      });
-      this.getPhoto(this.state.keyWord);
-    }
-
-    if (prevState.perPage !== this.state.perPage) {
-      this.getPhoto(this.state.keyWord);
-    }
-
-    document.addEventListener('keydown', this.quitModal);
-  };
-
-  getPhoto = async keyWord => {
+  getPhoto = async (keyWord, page) => {
     this.setState({ isLoading: true });
     const photos = await axios.get(
-      `https://pixabay.com/api/?q=${keyWord}&page=${this.state.page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=${this.state.perPage}`
+      `https://pixabay.com/api/?q=${keyWord}&page=${page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=12`
     );
 
-    this.setState({
-      photos: photos.data,
-      isLoading: false,
+    this.setState(prev => {
+      return {
+        total: photos.data.total / 12,
+        photos: [...prev.photos, ...photos.data.hits],
+        isLoading: false,
+        page: prev.page + 1,
+      };
     });
-    console.log(this.state.photos.hits);
   };
 
   onSubmit = e => {
     const keyWord = e.target.search.value;
     this.setState({
+      page: 1,
+      photos: [],
       keyWord: keyWord,
     });
 
     e.preventDefault();
     e.target.reset();
+    this.getPhoto(keyWord, 1);
+  };
+
+  onModal = e => {
+   const bigImg = e.target.getAttribute('bigImg')
+    this.setState({
+      /*
+      largePhoto: this.state.photos.filter(
+        photo => photo.id === Math.floor(e.target.name)
+      ),
+      */
+     largePhoto: bigImg,
+      modal: true,
+    });
+    return bigImg
+  };
+
+  quitModal = e => {
+    this.setState({
+      modal: false,
+    });
+    if (e.key === 'Escape') {
+      this.setState({
+        modal: false,
+      });
+    }
   };
 
   loadMore = e => {
     e.preventDefault();
-    this.setState(prev => {
-      return {
-        perPage: prev.perPage + 12,
-      };
-    });
-  };
-
-  onModal = e => {
-    const target = e.target;
-    this.setState({ modal: true });
-    this.bigPhoto = this.state.photos.hits.filter(
-      photo => photo.id === Math.floor(target.name)
-    );
-  };
-
-  quitModal = e => {
-    if (e.key === 'Escape') {
-      this.setState({ modal: false });
-    }
+    this.getPhoto(this.state.keyWord, this.state.page);
   };
 
   render() {
-    const { perPage } = this.state;
+    const { total } = this.state;
     const { photos } = this.state;
     const { modal } = this.state;
     const { isLoading } = this.state;
+    const { page } = this.state;
 
     return (
-      <div className={style.main} style={{}}>
+      <div className={style.main}>
         <SearchBar onSubmit={this.onSubmit} />
-        {isLoading && <Loader Loading={isLoading} />}
-        {photos.total > 0 && (
-          <ImageGallery photos={photos.hits} onModal={this.onModal} />
+
+        <ImageGallery
+          photos={photos}
+          onModal={this.onModal}
+          Loading={isLoading}
+        />
+
+        {total >= page && <Button loadMore={this.loadMore} />}
+        {modal && (
+          <Modal
+            largePhoto={this.state.largePhoto}
+            quitModal={this.quitModal}
+          />
         )}
-        {photos.total > perPage && <Button loadMOre={this.loadMore} />}
-        {modal && <Modal largePhoto={this.bigPhoto[0]} />}
       </div>
     );
   }

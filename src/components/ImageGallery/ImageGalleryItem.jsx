@@ -2,15 +2,16 @@ import '../styles.css';
 import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
 
-const ImageGalleryItem = ({ webformatURL, id, onModal }) => {
+const ImageGalleryItem = ({ webformatURL, id, onModal, bigimg }) => {
   return (
     <li className={style.ImageGalleryItem}>
       <img
         className={style.ImageGalleryItem_image}
         name={id}
         src={webformatURL}
-        alt=""
+        alt=''
         onClick={onModal}
+        bigImg={bigimg}
       />
     </li>
   );
