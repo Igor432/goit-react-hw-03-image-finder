@@ -47,17 +47,16 @@ class App extends Component {
   };
 
   onModal = e => {
-   const bigImg = e.target.getAttribute('bigImg')
+    const bigImg = e.target.getAttribute('bigImg');
     this.setState({
       /*
       largePhoto: this.state.photos.filter(
         photo => photo.id === Math.floor(e.target.name)
       ),
       */
-     largePhoto: bigImg,
+      largePhoto: bigImg,
       modal: true,
     });
-    return bigImg
   };
 
   quitModal = e => {
