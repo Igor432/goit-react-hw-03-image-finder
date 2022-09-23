@@ -5,30 +5,27 @@ import { Component } from 'react';
 import PropTypes from 'prop-types'; // ES6
 
 class ImageGalleryItem extends Component {
+
+  
   state = {
     modal: false,
   };
 
-  quitModal = e => {
-    this.setState({
-      modal: false,
-    });
-  };
 
-  large = '';
+  handleClick = () => {
+  this.setState(prev=> {
+    return {
+    modal: !prev.modal
+    }
+  })
+}
 
-  openModal = e => {
-    this.setState({
-      modal: true,
-    });
-    this.large = e.target.getAttribute('bigimg');
-  };
 
   render() {
     if (this.state.modal) {
       return (
         <div>
-          <Modal largePhoto={this.large} quitModal={this.quitModal}></Modal>
+          <Modal largePhoto={this.props.bigimg} quitModal={this.handleClick} modal={this.state.modal}></Modal>
         </div>
       );
     }
@@ -41,7 +38,7 @@ class ImageGalleryItem extends Component {
             name={this.props.id}
             src={this.props.webformatURL}
             alt=""
-            onClick={this.openModal}
+            onClick={this.handleClick}
             bigimg={this.props.bigimg}
           />
         </li>

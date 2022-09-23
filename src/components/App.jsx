@@ -3,6 +3,8 @@ import axios from 'axios';
 import SearchBar from './ImageGallery/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './ImageGallery/Button';
+import Notiflix from 'notiflix';
+
 
 const { Component } = require('react');
 
@@ -15,22 +17,30 @@ class App extends Component {
   };
 
   getPhoto = async (keyWord, page) => {
+
     this.setState({ isLoading: true });
     const photos = await axios.get(
       `https://pixabay.com/api/?q=${keyWord}&page=${page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=12`
     );
-
+  
     this.setState(prev => {
       return {
         total: photos.data.total / 12,
         photos: [...prev.photos, ...photos.data.hits],
         isLoading: false,
         page: prev.page + 1,
-      };
-    });
+      }
+    })
+
+if (this.state.photos === [])
+     Notiflix.Notify.failure('Not found');
+
+  
+
   };
 
   onSubmit = e => {
+ 
     const keyWord = e.target.search.value;
     this.setState({
       page: 1,
@@ -41,6 +51,9 @@ class App extends Component {
     e.preventDefault();
     e.target.reset();
     this.getPhoto(keyWord, 1);
+ 
+ 
+    
   };
 
   onChange = e => {
