@@ -1,6 +1,8 @@
 import '../styles.css';
 import style from './image.module.css';
 import { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
+
 
 export class Modal extends Component {
 
@@ -34,6 +36,9 @@ render() {
 }
 }
 
-
+Modal.propTypes = {
+  quitModal: PropTypes.func.isRequired,
+  largePhoto: PropTypes.string.isRequired,
+};
 
 export default Modal;
