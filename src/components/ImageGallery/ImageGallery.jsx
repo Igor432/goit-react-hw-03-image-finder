@@ -3,28 +3,20 @@ import PropTypes from 'prop-types'; // ES6
 import style from './image.module.css';
 import Loader from '../ImageGallery/Loader';
 
-const ImageGallery = ({ photos,  Loading }) => {
-
-
+const ImageGallery = ({ photos, Loading }) => {
   return (
     <ul className={style.ImageGallery}>
- 
       {photos.map(photo => (
         <ImageGalleryItem
-       
           alt={photo.tag}
           id={photo.id}
           key={photo.id}
           webformatURL={photo.webformatURL}
-        
           bigimg={photo.largeImageURL}
-        >
-        
-        </ImageGalleryItem>
+        ></ImageGalleryItem>
       ))}
- 
-      {Loading && <Loader Loading={Loading}></Loader>}
 
+      {Loading && <Loader Loading={Loading}></Loader>}
     </ul>
   );
 };
