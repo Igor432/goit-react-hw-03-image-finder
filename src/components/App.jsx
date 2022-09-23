@@ -22,6 +22,10 @@ class App extends Component {
         `https://pixabay.com/api/?q=${keyWord}&page=${page}&key=28780636-ee20ed417c8a5aa1eeee48e35&image_type=photo&orientation=horizontal&per_page=12`
       );
 
+      if (photos.data.hits.length === 0) {
+        Notiflix.Notify.failure('Qui timide rogat docet negare');
+      }
+
       this.setState(prev => {
         return {
           total: photos.data.total / 12,
@@ -47,9 +51,6 @@ class App extends Component {
     e.target.reset();
 
     this.getPhoto(keyWord, 1);
-    if (this.state.photos.length === 0) {
-      Notiflix.Notify.failure('Qui timide rogat docet negare');
-    }
   };
 
   onChange = e => {
