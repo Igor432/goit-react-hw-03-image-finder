@@ -12,7 +12,6 @@ class App extends Component {
     page: 1,
     photos: [],
     keyWord: '',
-    largePhoto: {},
   };
 
   getPhoto = async (keyWord, page) => {
