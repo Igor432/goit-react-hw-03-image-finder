@@ -5,27 +5,27 @@ import { Component } from 'react';
 import PropTypes from 'prop-types'; // ES6
 
 class ImageGalleryItem extends Component {
-
-  
   state = {
     modal: false,
   };
 
-
   handleClick = () => {
-  this.setState(prev=> {
-    return {
-    modal: !prev.modal
-    }
-  })
-}
-
+    this.setState(prev => {
+      return {
+        modal: !prev.modal,
+      };
+    });
+  };
 
   render() {
     if (this.state.modal) {
       return (
         <div>
-          <Modal largePhoto={this.props.bigimg} quitModal={this.handleClick} modal={this.state.modal}></Modal>
+          <Modal
+            largePhoto={this.props.bigimg}
+            quitModal={this.handleClick}
+            modal={this.state.modal}
+          ></Modal>
         </div>
       );
     }

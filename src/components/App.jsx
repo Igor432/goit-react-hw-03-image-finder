@@ -47,7 +47,9 @@ class App extends Component {
     e.target.reset();
 
     this.getPhoto(keyWord, 1);
-    console.log(this.state.photos);
+    if (this.state.photos.length === 0) {
+      Notiflix.Notify.failure('Qui timide rogat docet negare');
+    }
   };
 
   onChange = e => {
