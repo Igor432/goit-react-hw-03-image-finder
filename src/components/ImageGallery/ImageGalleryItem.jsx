@@ -25,7 +25,7 @@ class ImageGalleryItem extends Component {
             largePhoto={this.props.bigimg}
             quitModal={this.handleClick}
             modal={this.state.modal}
-          ></Modal>
+          />
         </div>
       );
     }
