@@ -30,21 +30,21 @@ class App extends Component {
         return {
           total: photos.data.total / 12,
           photos: [...prev.photos, ...photos.data.hits],
-          isLoading: false,
           page: prev.page + 1,
         };
       });
     } catch {
       console.log('Error');
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   onSubmit = e => {
-    const keyWord = e.target.search.value;
+    const keyWord = this.state.keyWord;
     this.setState({
       page: 1,
       photos: [],
-      keyWord: keyWord,
     });
 
     e.preventDefault();
@@ -59,7 +59,7 @@ class App extends Component {
     });
   };
 
-  loadMore = e => {
+  loadMore = () => {
     this.getPhoto(this.state.keyWord, this.state.page);
   };
 
