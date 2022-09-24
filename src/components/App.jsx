@@ -28,7 +28,6 @@ class App extends Component {
 
       this.setState(prev => {
         return {
-          total: photos.data.total / 12,
           photos: [...prev.photos, ...photos.data.hits],
           page: prev.page + 1,
         };
